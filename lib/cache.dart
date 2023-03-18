@@ -3,14 +3,15 @@ import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_stor
 import 'package:path_provider/path_provider.dart';
 
 class Cache {
-  Future<String> _getCacheDirectory() async {
+  static Future<String> _getCacheDirectory() async {
     final directory = await getTemporaryDirectory();
     print("insed  getCacheDirectory >>>>>>");
     print(directory.path);
     return directory.path;
   }
 
-  Future<HiveCacheStore> _getCacheStore() async {
+  static Future<HiveCacheStore> _getCacheStore() async {
+    print("insed getCacheStore >>>>>>");
     String path = await _getCacheDirectory();
     final cacheStore = HiveCacheStore(
       path,
@@ -19,9 +20,10 @@ class Cache {
     return cacheStore;
   }
 
-  Future<CacheOptions> _getCachOptions() async {
+  static Future<CacheOptions> getCachOptions() async {
+    print("insed getCachOptions >>>>>>");
     final cacheStore = await _getCacheStore();
-    var customCacheOptions = CacheOptions(
+    final customCacheOptions = CacheOptions(
       store: cacheStore,
       policy: CachePolicy.forceCache,
       priority: CachePriority.high,
@@ -34,11 +36,4 @@ class Cache {
     );
     return customCacheOptions;
   }
-
-
-
-
-
-
-
 }
